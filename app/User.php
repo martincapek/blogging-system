@@ -2,12 +2,15 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Jrean\UserVerification\Traits\UserVerification;
+
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use UserVerification;
 
     /**
      * The attributes that are mass assignable.

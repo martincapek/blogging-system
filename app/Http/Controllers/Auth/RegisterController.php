@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Jrean\UserVerification\Facades\UserVerification;
+use Jrean\UserVerification\Traits\VerifiesUsers;
+use Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -22,12 +25,13 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
+    use VerifiesUsers;
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,13 +40,15 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // Based on the workflow you need, you may update and customize the following lines.
+
+        $this->middleware('guest', ['except' => ['getVerification', 'getVerificationError']]);
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -57,7 +63,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -67,5 +73,24 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $user = $this->create($request->all());
+        $this->guard()->login($user);
+
+        UserVerification::generate($user);
+        UserVerification::send($user, trans('laravel-user-verification::user-verification.verification_email_subject'));
+
+        return redirect($this->redirectPath());
     }
 }
