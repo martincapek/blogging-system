@@ -20,7 +20,7 @@
                     <td class="visible-lg visible-md">{{ $post->category }}</td>
                     <td class="visible-lg visible-md">{{ $post->views }}</td>
                     <td class="visible-lg visible-md">{{ $post->comments }}</td>
-                    <td class="visible-lg visible-md">{{ $post->created_at->format('j. F Y, H:i') }}</td>
+                    <td class="visible-lg visible-md">{{ $post->created_at->diffForHumans() }}</td>
                     <td></td>
                 </tr>
             @endforeach

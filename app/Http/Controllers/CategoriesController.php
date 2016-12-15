@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\Category;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class PostsController extends AdminController
+class CategoriesController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +16,14 @@ class PostsController extends AdminController
      */
     public function index()
     {
+
         $page_info = [
             'page_name' => 'Posts List'
         ];
 
-        $posts = Post::all();
+        $categories = Category::get()->toHierarchy();
 
-        return view('posts.index', compact('posts', 'page_info'));
+        return view('categories.index', compact('page_info', 'categories'));
     }
 
     /**
@@ -32,7 +33,7 @@ class PostsController extends AdminController
      */
     public function create()
     {
-        return view('posts.create');
+        //
     }
 
     /**

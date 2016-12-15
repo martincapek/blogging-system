@@ -22,8 +22,10 @@ class AdminController extends Controller
         // Make menu
         Menu::make('MainNavBar', function($menu){
 
-            $menu->add('PostsList', ['icon' => 'fa-pencil', 'route' => 'posts.list']);
-            $menu->add('UserList', ['icon' => 'fa-user', 'route' => 'users.list']);
+            $menu->add('Posts List', ['icon' => 'fa-pencil', 'route' => 'posts.list']);
+            $menu->add('Category List', ['icon' => 'fa-user', 'route' => 'categories.list']);
+
+            $menu->add('User List', ['icon' => 'fa-user', 'route' => 'users.list']);
         });
 
 

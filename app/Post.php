@@ -12,7 +12,6 @@ class Post extends Model
     use SoftDeletes;
 
 
-
     /**
      * The attributes that should be mutated to dates.
      *
@@ -32,9 +31,14 @@ class Post extends Model
     ];
 
 
-
-    public function getCreatedAtAttribute($date) {
+    public function getCreatedAtAttribute($date)
+    {
 
         return new Date($date);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Category');
     }
 }

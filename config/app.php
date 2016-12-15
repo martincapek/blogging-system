@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Prague',
 
     /*
     |--------------------------------------------------------------------------
@@ -182,6 +182,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Baum\Providers\BaumServiceProvider::class,
 
 
     ],

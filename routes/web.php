@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 
 
-Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth']], function () {
+Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/users', [
         'as' => 'users.list',
@@ -33,5 +33,11 @@ Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth']], function ()
     Route::get('/posts', [
         'as' => 'posts.list',
         'uses' => 'PostsController@index'
+    ]);
+
+
+    Route::get('/categories', [
+        'as' => 'categories.list',
+        'uses' => 'CategoriesController@index'
     ]);
 });
