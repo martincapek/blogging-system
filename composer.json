@@ -14,7 +14,12 @@
         "lavary/laravel-menu": "dev-master",
         "vinkla/hashids": "^2.4",
         "jenssegers/date": "^3.2",
-        "barryvdh/laravel-debugbar": "^2.3"
+        "barryvdh/laravel-debugbar": "^2.3",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "unisharp/laravel-filemanager": "^1.6",
+        "intervention/image": "^2.3",
+        "cviebrock/eloquent-sluggable": "4.1",
+        "laracasts/flash": "^2.0"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
@@ -48,6 +53,8 @@
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
             "php artisan optimize"
         ]
     },

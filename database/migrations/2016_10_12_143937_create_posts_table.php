@@ -15,10 +15,12 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('title');
+            $table->string('slug');
             $table->text('perex');
             $table->text('content');
-            $table->integer('views');
+            $table->text('image');
+            $table->integer('views')->nullable();
             $table->integer('author')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();

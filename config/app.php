@@ -183,6 +183,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
+
+
 
 
     ],
@@ -238,6 +244,7 @@ return [
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Date' => Jenssegers\Date\Date::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

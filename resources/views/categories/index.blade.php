@@ -7,7 +7,7 @@
             <tr>
                 <th>Name</th>
                 <th class="visible-lg visible-md">Description</th>
-                <th width="220" class="visible-lg visible-md">Created at</th>
+                <th class="visible-lg visible-md">Created at</th>
                 <th>Actions</th>
             </tr>
 

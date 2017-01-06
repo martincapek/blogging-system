@@ -23,6 +23,8 @@ Route::get('/', function () {
 
 
 
+
+
 Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/users', [
@@ -30,14 +32,48 @@ Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']
         'uses' => 'UsersController@index'
     ]);
 
-    Route::get('/posts', [
-        'as' => 'posts.list',
-        'uses' => 'PostsController@index'
-    ]);
+
+
+    Route::group(['prefix' => 'posts'], function() {
+        Route::get('/{status?}', [
+            'as' => 'posts.list',
+            'uses' => 'PostsController@index'
+        ]);
+
+        Route::get('/deleted/restore/{id}', [
+            'as' => 'posts.restore',
+            'uses' => 'PostsController@restore'
+        ]);
+
+        Route::get('/create', [
+            'as' => 'posts.create',
+            'uses' => 'PostsController@create'
+        ]);
+
+        Route::get('/deleted', [
+            'as' => 'posts.deleted',
+            'uses' => 'PostsController@deleted'
+        ]);
+
+        Route::post('/store', [
+            'as' => 'posts.store',
+            'uses' => 'PostsController@store'
+        ]);
+
+        Route::get('/destroy/{id}', [
+            'as' => 'posts.destroy',
+            'uses' => 'PostsController@destroy'
+        ]);
+    });
+
 
 
     Route::get('/categories', [
         'as' => 'categories.list',
         'uses' => 'CategoriesController@index'
     ]);
+
+
+
 });
+
