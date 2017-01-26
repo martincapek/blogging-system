@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Post;
+
 class HomeController extends AdminController
 {
 
@@ -18,6 +20,8 @@ class HomeController extends AdminController
             'page_name' => 'User List'
         ];
 
-        return view('home', compact('page_info'));
+        $post_count = Post::all()->count();
+
+        return view('home', compact('page_info', 'post_count'));
     }
 }

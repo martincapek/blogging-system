@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('perex');
-            $table->text('content');
+            $table->text('text');
             $table->text('image');
             $table->integer('views')->nullable();
             $table->integer('author')->references('id')->on('users');

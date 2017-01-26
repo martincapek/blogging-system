@@ -18,7 +18,7 @@ class PostTableSeeder extends Seeder
             \App\Post::create([
                 'title' => $faker->text(30),
                 'perex' => $faker->text(200),
-                'content' => $faker->text(200),
+                'text' => $faker->text(200),
                 'image' => '/media/images/placeholder.jpg',
                 'views' => 0,
                 'author' => 1,

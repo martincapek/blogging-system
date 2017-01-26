@@ -18,7 +18,7 @@ class CategoriesController extends AdminController
     {
 
         $page_info = [
-            'page_name' => 'Posts List'
+            'page_name' => 'Categories List'
         ];
 
         $categories = Category::get()->toHierarchy();
@@ -33,7 +33,11 @@ class CategoriesController extends AdminController
      */
     public function create()
     {
-        //
+        $page_info = [
+            'page_name' => 'Create new Category'
+        ];
+
+        return view('categories.create', compact('page_info'));
     }
 
     /**

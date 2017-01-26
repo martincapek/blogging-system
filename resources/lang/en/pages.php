@@ -7,5 +7,6 @@ return [
     'posts_create' => 'Create new Post',
     'posts_edit' => 'Edit current post',
     'posts_show' => 'Show Post: ',
+    'posts_deleted' => 'Trash',
 
 ];

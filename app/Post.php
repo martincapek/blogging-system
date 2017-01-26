@@ -25,7 +25,7 @@ class Post extends Model
     public $fillable = [
         'title',
         'perex',
-        'content',
+        'text',
         'image',
         'views',
         'author',
@@ -56,11 +56,13 @@ class Post extends Model
         return $this->belongsToMany('App\Category');
     }
 
+
     /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
      */
+
     public function sluggable()
     {
         return [

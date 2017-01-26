@@ -22,23 +22,25 @@ Route::get('/', function () {
 });
 
 
-
-
-
 Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']], function () {
-    Route::get('/', 'HomeController@index');
+    Route::get('/', [
+        'as' => 'home',
+        'uses' => 'HomeController@index'
+    ]);
+
     Route::get('/users', [
         'as' => 'users.list',
         'uses' => 'UsersController@index'
     ]);
 
 
+    Route::group(['prefix' => 'posts'], function () {
 
-    Route::group(['prefix' => 'posts'], function() {
-        Route::get('/{status?}', [
+        Route::get('/', [
             'as' => 'posts.list',
             'uses' => 'PostsController@index'
         ]);
+
 
         Route::get('/deleted/restore/{id}', [
             'as' => 'posts.restore',
@@ -50,29 +52,84 @@ Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']
             'uses' => 'PostsController@create'
         ]);
 
-        Route::get('/deleted', [
-            'as' => 'posts.deleted',
-            'uses' => 'PostsController@deleted'
+        Route::get('/edit/{id}', [
+            'as' => 'posts.edit',
+            'uses' => 'PostsController@edit'
         ]);
+
 
         Route::post('/store', [
             'as' => 'posts.store',
             'uses' => 'PostsController@store'
         ]);
 
+        Route::post('/update/{id}', [
+            'as' => 'posts.update',
+            'uses' => 'PostsController@update'
+        ]);
+
+
         Route::get('/destroy/{id}', [
             'as' => 'posts.destroy',
             'uses' => 'PostsController@destroy'
         ]);
+
+        Route::get('/trash', [
+            'as' => 'posts.trash',
+            'uses' => 'PostsController@trash'
+        ]);
+
     });
 
 
 
-    Route::get('/categories', [
-        'as' => 'categories.list',
-        'uses' => 'CategoriesController@index'
-    ]);
 
+    Route::group(['prefix' => 'categories'], function () {
+
+        Route::get('/', [
+            'as' => 'categories.list',
+            'uses' => 'CategoriesController@index'
+        ]);
+
+
+        Route::get('/deleted/restore/{id}', [
+            'as' => 'categories.restore',
+            'uses' => 'CategoriesController@restore'
+        ]);
+
+        Route::get('/create', [
+            'as' => 'categories.create',
+            'uses' => 'CategoriesController@create'
+        ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'categories.edit',
+            'uses' => 'CategoriesController@edit'
+        ]);
+
+
+        Route::post('/store', [
+            'as' => 'posts.store',
+            'uses' => 'CategoriesController@store'
+        ]);
+
+        Route::post('/update/{id}', [
+            'as' => 'categories.update',
+            'uses' => 'CategoriesController@update'
+        ]);
+
+
+        Route::get('/destroy/{id}', [
+            'as' => 'categories.destroy',
+            'uses' => 'CategoriesController@destroy'
+        ]);
+
+        Route::get('/trash', [
+            'as' => 'categories.trash',
+            'uses' => 'CategoriesController@trash'
+        ]);
+
+    });
 
 
 });
