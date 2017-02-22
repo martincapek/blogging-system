@@ -11,13 +11,11 @@
                 <th>Actions</th>
             </tr>
 
+
+
+
             @foreach($categories as $category)
-                <tr>
-                    <td>{{ $category->name }}</td>
-                    <td>{{ $category->description }}</td>
-                    <td class="visible-lg visible-md">{{ $category->created_at->format('j. F Y, H:i') }}</td>
-                    <td>{{ Auth::user()->isVerified() }}</td>
-                </tr>
+                @include("partials._single_row_table_category")
             @endforeach
 
         </table>

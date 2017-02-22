@@ -109,7 +109,7 @@ Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']
 
 
         Route::post('/store', [
-            'as' => 'posts.store',
+            'as' => 'categories.store',
             'uses' => 'CategoriesController@store'
         ]);
 
@@ -124,12 +124,12 @@ Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']
             'uses' => 'CategoriesController@destroy'
         ]);
 
-        Route::get('/trash', [
-            'as' => 'categories.trash',
-            'uses' => 'CategoriesController@trash'
-        ]);
+
 
     });
+
+
+    
 
 
 });

@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->text('perex');
             $table->text('text');
             $table->text('image');
+            $table->integer('category_id')->nullable();
             $table->integer('views')->nullable();
             $table->integer('author')->references('id')->on('users');
             $table->softDeletes();

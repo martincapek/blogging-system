@@ -33,7 +33,6 @@ class AdminController extends Controller
             $menu->add('Category List', ['icon' => 'fa-user', 'route' => 'categories.list', 'nickname' => 'category_list']);
             $menu->category_list->add('List', ['icon' => 'fa-list', 'route' => 'categories.list']);
             $menu->category_list->add('Create', ['icon' => 'fa-plus', 'route' => 'categories.create']);
-            $menu->category_list->add('Deleted', ['icon' => 'fa-trash', 'route' => 'categories.trash']);
 
 
 

@@ -10,7 +10,6 @@
         "nicolaslopezj/searchable": "1.*",
         "jrean/laravel-user-verification": "^3.0",
         "zizaco/entrust": "5.2.x-dev",
-        "baum/baum": "~1.1",
         "lavary/laravel-menu": "dev-master",
         "vinkla/hashids": "^2.4",
         "jenssegers/date": "^3.2",
@@ -19,7 +18,9 @@
         "unisharp/laravel-filemanager": "^1.6",
         "intervention/image": "^2.3",
         "cviebrock/eloquent-sluggable": "4.1",
-        "laracasts/flash": "^2.0"
+        "laracasts/flash": "^2.0",
+        "kalnoy/nestedset": "^4.2",
+        "fzaninotto/faker": "^1.6"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

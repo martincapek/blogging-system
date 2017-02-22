@@ -4,7 +4,7 @@
 
 
     <div class="row">
-        <form role="form" action="{{ route('categories.store') }}" method="POST">
+        <form role="form" action="{{ route('categories.update', $category->id) }}" method="POST">
             @include('categories._form')
         </form>
     </div>

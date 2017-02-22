@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-01-05.
+    * Generated on 2017-01-28.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -46,8 +46,6 @@ namespace PHPSTORM_META {
             'hashids.connection' instanceof \Hashids\Hashids,
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
-            'command.baum' instanceof \Baum\Console\BaumCommand,
-            'command.baum.install' instanceof \Baum\Console\InstallCommand,
             'image' instanceof \Intervention\Image\ImageManager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
@@ -173,8 +171,6 @@ namespace PHPSTORM_META {
             'hashids.connection' instanceof \Hashids\Hashids,
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
-            'command.baum' instanceof \Baum\Console\BaumCommand,
-            'command.baum.install' instanceof \Baum\Console\InstallCommand,
             'image' instanceof \Intervention\Image\ImageManager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
@@ -300,8 +296,6 @@ namespace PHPSTORM_META {
             'hashids.connection' instanceof \Hashids\Hashids,
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
-            'command.baum' instanceof \Baum\Console\BaumCommand,
-            'command.baum.install' instanceof \Baum\Console\InstallCommand,
             'image' instanceof \Intervention\Image\ImageManager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
@@ -427,8 +421,6 @@ namespace PHPSTORM_META {
             'hashids.connection' instanceof \Hashids\Hashids,
             'debugbar' instanceof \Barryvdh\Debugbar\LaravelDebugbar,
             'command.debugbar.clear' instanceof \Barryvdh\Debugbar\Console\ClearCommand,
-            'command.baum' instanceof \Baum\Console\BaumCommand,
-            'command.baum.install' instanceof \Baum\Console\InstallCommand,
             'image' instanceof \Intervention\Image\ImageManager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,

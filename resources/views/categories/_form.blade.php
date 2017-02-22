@@ -1,9 +1,8 @@
 <div class="col-md-12 text-right">
     <div class="box">
         <div class="box-footer">
-            <button type="submit" class="btn btn-primary" name="publish" value="1">Publish</button>
-            <button type="submit" class="btn btn-warning" name="publish" value="0">Save as draft</button>
-            <a type="submit" class="btn btn-danger" href="{{ route('posts.list') }}">Cancel</a>
+            <button type="submit" class="btn btn-primary">Publish</button>
+            <a type="submit" class="btn btn-danger" href="{{ route('categories.list') }}">Cancel</a>
         </div>
     </div>
 
@@ -21,23 +20,26 @@
         <div class="box-body">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder=""
-                       value="{{ $post->title or "" }}">
+                <input type="text" class="form-control" id="name" name="name" placeholder=""
+                       value="{{ $category->name or "" }}">
             </div>
 
             <div class="form-group">
                 <label for="perex">Perex</label>
-                <textarea name="perex" class="form-control" id="perex" placeholder="">{{ $post->perex or "" }}</textarea>
+                <textarea name="description" class="form-control" id="description"
+                          placeholder="">{{ $category->description or "" }}</textarea>
             </div>
 
-            <div class="form-group">
-                <label for="text">Content</label>
-                <textarea name="text" class="form-control" id="text" placeholder="">{{ $post->text or "" }}</textarea>
-            </div>
 
             <div class="form-group">
-                <label>Category</label>
-                <select class="form-control select2" style="width: 100%;">
+                <label>Parent category</label>
+                <select name="parent_id" class="form-control select2" style="width: 100%;">
+                    <option value="">-</option>
+                    @foreach($categories as $category)
+
+                       @include("partials._single_select_option_category")
+
+                    @endforeach
 
                 </select>
             </div>
@@ -137,17 +139,8 @@
         $(".select2").select2();
 
         $('#lfm').filemanager('image');
-        $(function () {
-            // Replace the <textarea id="editor1"> with a CKEditor
-            // instance, using default configuration.
 
-            CKEDITOR.replace('text', {
-                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
-                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
-            });
-        });
+
     </script>
 @endsection
 
