@@ -10,7 +10,7 @@
         "nicolaslopezj/searchable": "1.*",
         "jrean/laravel-user-verification": "^3.0",
         "zizaco/entrust": "5.2.x-dev",
-        "lavary/laravel-menu": "dev-master",
+        "lavary/laravel-menu": "^1.6",
         "vinkla/hashids": "^2.4",
         "jenssegers/date": "^3.2",
         "barryvdh/laravel-debugbar": "^2.3",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "80ec4af955aee922d3c9bae6958113f9",
+    "content-hash": "d64bd514451551cd217fb61063a15eba",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1210,16 +1210,16 @@
         },
         {
             "name": "lavary/laravel-menu",
-            "version": "dev-master",
+            "version": "v1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lavary/laravel-menu.git",
-                "reference": "f53affea587e76836ed9e178d075f596b63af2ba"
+                "reference": "1617add78aa8ec8e4657aba3d88d2b86fc534b9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lavary/laravel-menu/zipball/f53affea587e76836ed9e178d075f596b63af2ba",
-                "reference": "f53affea587e76836ed9e178d075f596b63af2ba",
+                "url": "https://api.github.com/repos/lavary/laravel-menu/zipball/1617add78aa8ec8e4657aba3d88d2b86fc534b9f",
+                "reference": "1617add78aa8ec8e4657aba3d88d2b86fc534b9f",
                 "shasum": ""
             },
             "require": {
@@ -1248,7 +1248,7 @@
             "keywords": [
                 "laravel"
             ],
-            "time": "2016-11-11T10:16:37+00:00"
+            "time": "2016-09-12T13:17:45+00:00"
         },
         {
             "name": "league/flysystem",
@@ -4629,8 +4629,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "zizaco/entrust": 20,
-        "lavary/laravel-menu": 20
+        "zizaco/entrust": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

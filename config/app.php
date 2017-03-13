@@ -186,6 +186,7 @@ return [
         Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
+        Lavary\Menu\ServiceProvider::class
 
 
 
@@ -244,6 +245,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Date' => Jenssegers\Date\Date::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Menu'      => Lavary\Menu\Facade::class
 
     ],
 

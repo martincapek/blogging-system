@@ -17,9 +17,50 @@ Auth::routes();
 Route::get('email-verification/error', 'Auth\RegisterController@getVerificationError')->name('email-verification.error');
 Route::get('email-verification/check/{token}', 'Auth\RegisterController@getVerification')->name('email-verification.check');
 
-Route::get('/', function () {
-    return "Nothing here.";
-});
+Route::get('/', [
+    'as' => 'fp_index',
+    'uses' => 'FrontendController@index'
+]);
+
+Route::get('/timeline', [
+    'as' => 'fp_timeline',
+    'uses' => 'FrontendController@timeline'
+]);
+
+Route::get('/gallery', [
+    'as' => 'fp_gallery',
+    'uses' => 'FrontendController@gallery'
+]);
+
+Route::get('/schools/czech-republic', [
+    'as' => 'fp_czech-republic',
+    'uses' => 'FrontendController@czech'
+]);
+
+Route::get('/schools/norway', [
+    'as' => 'fp_norway',
+    'uses' => 'FrontendController@norway'
+]);
+
+Route::get('/schools/spain', [
+    'as' => 'fp_spain',
+    'uses' => 'FrontendController@spain'
+]);
+
+Route::get('/schools/portugal', [
+    'as' => 'fp_portugal',
+    'uses' => 'FrontendController@portugal'
+]);
+
+Route::get('/schools/italy', [
+    'as' => 'fp_italy',
+    'uses' => 'FrontendController@italy'
+]);
+
+
+
+
+
 
 
 Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']], function () {
