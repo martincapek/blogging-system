@@ -399,6 +399,10 @@ footer .inner {
     border-right: 7px solid white;
 }
 
+.list-unstyled .active a {
+    color: #000;
+}
+
 @media only screen and (min-width: 1170px) {
     .cd-timeline-content {
         margin-left: 0;
@@ -459,6 +463,15 @@ footer .inner {
         -moz-animation: cd-bounce-2 0.6s;
         animation: cd-bounce-2 0.6s;
     }
+}
+
+
+#sidebar {
+    margin-top: 30px;
+}
+
+.portfolio-item {
+    margin-bottom: 40px;
 }
 
 @media only screen and (min-width: 1170px) {

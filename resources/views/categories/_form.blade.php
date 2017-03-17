@@ -31,19 +31,6 @@
             </div>
 
 
-            <div class="form-group">
-                <label>Parent category</label>
-                <select name="parent_id" class="form-control select2" style="width: 100%;">
-                    <option value="">-</option>
-                    @foreach($categories as $category)
-
-                       @include("partials._single_select_option_category")
-
-                    @endforeach
-
-                </select>
-            </div>
-
 
             <div class="form-group">
                 <label for="thumbnail">Featured Image</label>

@@ -21,6 +21,7 @@ class FrontendController extends Controller
             $menu->schools->add('Spain', 'schools/spain');
             $menu->add('Timeline', 'timeline');
             $menu->add('Gallery',  'gallery');
+            $menu->add('Blog',  'blog');
 
         });
     }

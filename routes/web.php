@@ -58,7 +58,48 @@ Route::get('/schools/italy', [
 ]);
 
 
+Route::group(['prefix' => 'blog'], function() {
 
+
+
+    Route::get('/p/{category}/{id}', [
+        'as' => 'blog.detail',
+        'uses' => 'BlogController@postDetail'
+    ]);
+
+
+    Route::get('/c/{category}', [
+        'as' => 'blog.category',
+        'uses' => 'BlogController@blogCategory'
+    ]);
+
+    Route::post('/search/', [
+        'as' => 'blog.search',
+        'uses' => 'BlogController@search'
+    ]);
+
+
+    Route::get('/a/{category}', [
+        'as' => 'blog.author',
+        'uses' => 'BlogController@blogAuthor'
+    ]);
+
+    Route::post('/add/comment/{post}', [
+        'as' => 'blog.comment',
+        'uses' => 'BlogController@addComment'
+    ]);
+
+    Route::get('/add/reply/{comment}', [
+        'as' => 'blog.reply',
+        'uses' => 'BlogController@addReply'
+    ]);
+
+    Route::get('/', [
+        'as' => 'blog.home',
+        'uses' => 'BlogController@blogIndex'
+    ]);
+
+});
 
 
 
@@ -96,6 +137,16 @@ Route::group(['prefix' => 'admin', 'middlewear' => ['web', 'auth', 'isVerified']
         Route::get('/edit/{id}', [
             'as' => 'posts.edit',
             'uses' => 'PostsController@edit'
+        ]);
+
+        Route::get('/comments/{id}', [
+            'as' => 'posts.comments',
+            'uses' => 'PostsController@comments'
+        ]);
+
+        Route::get('/comment/delete/{id}', [
+            'as' => 'comment.destroy',
+            'uses' => 'PostsController@destroyComment'
         ]);
 
 

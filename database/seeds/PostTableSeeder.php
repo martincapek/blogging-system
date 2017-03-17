@@ -18,12 +18,18 @@ class PostTableSeeder extends Seeder
             \App\Post::create([
                 'title' => $faker->text(30),
                 'perex' => $faker->text(200),
-                'text' => $faker->text(200),
+                'text' => $faker->text(2000),
                 'image' => '/media/images/placeholder.jpg',
                 'views' => 0,
-                'author' => 1,
+                'author_id' => 1,
+                'category_id' => 1,
                 'created_at' => \Carbon\Carbon::now()
             ]);
         }
+
+
+        \App\Category::create([
+            'name' => 'Uncategorized'
+        ]);
     }
 }

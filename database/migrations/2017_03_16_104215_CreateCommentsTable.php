@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Kalnoy\Nestedset\NestedSet;
 
-class CreatePostsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +14,17 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
+
+            NestedSet::columns($table);
             $table->increments('id');
-            $table->string('title');
-            $table->string('slug');
-            $table->text('perex');
-            $table->longText('text');
-            $table->text('image');
-            $table->integer('category_id');
-            $table->integer('views')->nullable();
             $table->integer('author_id')->references('id')->on('users');
+            $table->integer('post_id')->references('id')->on('posts');
+            $table->text('content');
+            $table->boolean('allowed')->default(0);
             $table->softDeletes();
             $table->timestamps();
+
 
         });
     }
@@ -36,6 +36,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('posts');
+        Schema::drop('comments');
     }
 }

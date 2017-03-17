@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\Rule;
+use App\Comment;
 use App\Http\Requests;
 use Jenssegers\Date\Date;
 
@@ -40,8 +42,9 @@ class PostsController extends AdminController
             'page_name' => trans('pages.posts_create')
         ];
 
+        $categories = Category::all();
 
-        return view('posts.create', compact('page_info'));
+        return view('posts.create', compact('page_info', 'categories'));
     }
 
     /**
@@ -55,10 +58,13 @@ class PostsController extends AdminController
 
 
         $this->validate($request, [
-            'title' => 'required|unique:posts|max:255',
+            'title' => 'required|max:255|' . Rule::unique('posts')->where(function ($query) use($request) {
+                    $query->where('category_id', $request->id);
+
+        }),
             'perex' => 'required',
             'text' => 'required',
-            'image' => 'required'
+//            'image' => 'required'
         ]);
 
 
@@ -67,20 +73,17 @@ class PostsController extends AdminController
             'perex' => $request->perex,
             'text' => $request->text,
             'image' => $request->image,
-            'author' => \Auth::user()->id,
-            'publish' => $request->publish
+            'author_id' => \Auth::user()->id,
+            'publish' => $request->publish,
+            'category_id' => $request->category_id,
+//            'seo_title' => $request->seo_title,
+//            'seo_description' => $request->seo_description,
+//            'seo_tags' => $request->seo_tags,
+//            'og_title' => $request->og_title,
+//            'og_description' => $request->og_description,
+//            'og_image' => $request->og_image
         ]);
 
-
-        /*
-            'seo_title' => $request->seo_title,
-            'seo_description' => $request->seo_description,
-            'seo_tags' => $request->seo_tags,
-            'og_title' => $request->og_title,
-            'og_description' => $request->og_description,
-            'og_image' => $request->og_image,
-
-         */
 
         $request->session()->flash('success', true);
         return redirect()->route('posts.list');
@@ -120,17 +123,6 @@ class PostsController extends AdminController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -143,9 +135,36 @@ class PostsController extends AdminController
         ];
 
         $post = Post::findOrFail($id);
+        $categories = Category::all();
+
+        return view('posts.edit', compact('page_info', 'post', 'categories'));
+    }
 
 
-        return view('posts.edit', compact('page_info', 'post'));
+
+    public function comments($id)
+    {
+        $page_info = [
+            'page_name' => 'Comments'
+        ];
+
+        $comments = Post::findOrFail($id)->comments;
+
+        return view('posts.comments', compact('page_info', 'comments'));
+    }
+
+
+    public function destroyComment($id)
+    {
+
+        if (Comment::findOrFail($id)->delete()) {
+            session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Comment was successfuly deleted!']);
+        } else {
+            session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Comment was not successfuly deleted! Please try it again or contact admin.']);
+        }
+
+
+        return redirect()->back();
     }
 
     /**
@@ -161,7 +180,7 @@ class PostsController extends AdminController
             'title' => 'required|max:255|unique:posts,title,' . $id,
             'perex' => 'required',
             'text' => 'required',
-            'image' => 'required'
+//            'image' => 'required'
         ]);
 
 
@@ -171,7 +190,14 @@ class PostsController extends AdminController
         $post->perex = $request->perex;
         $post->text = $request->text;
         $post->image = $request->image;
-        $post->author = \Auth::user()->id;
+        $post->category_id = $request->category_id;
+//        $post->seo_title = $request->seo_title;
+//        $post->seo_description = $request->seo_description;
+//        $post->seo_tags = $request->seo_tags;
+//        $post->og_title = $request->og_title;
+//        $post->og_description = $request->og_description;
+//        $post->og_tags = $request->og_tags;
+//        $post->og_image = $request->og_image;
 
 
         if ($post->save()) {

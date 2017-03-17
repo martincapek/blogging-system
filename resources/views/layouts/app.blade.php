@@ -46,6 +46,7 @@
 @if(Auth::user())
 
     <body class="hold-transition skin-blue sidebar-mini">
+
     <div class="wrapper">
 
         <!-- Main Header -->
@@ -361,7 +362,7 @@
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2016 {{ ((date('Y') > 2016)?"- ".date('Y'):"") }} <a href="#">Martin
+            <strong>Copyright &copy; 2016 {{ ((date('Y') > 2016)?"- ".date('Y'):"") }} <a target="_blank" href="http://www.martincapek.cz">Martin
                     Čapek</a>.</strong> All rights reserved.
         </footer>
 

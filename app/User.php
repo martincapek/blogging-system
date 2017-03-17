@@ -33,4 +33,10 @@ class User extends Authenticatable
     public function getFullNameAttribute() {
         return $this->name;
     }
+
+    public function comments() {
+        return $this->hasMany('App\Comment', 'author_id');
+    }
+
+
 }

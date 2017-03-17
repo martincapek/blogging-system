@@ -24,7 +24,7 @@ class AdminController extends Controller
 
 
 
-            $menu->add('Posts', ['icon' => 'fa-pencil', 'route' => 'posts.list', 'nickname' => 'posts']);
+            $menu->add('Posts', ['icon' => 'fa-pencil', 'route' => 'posts.list', 'nickname' => 'posts'])->active('/admin/posts/*');
             $menu->posts->add('List', ['icon' => 'fa-list', 'route' => 'posts.list']);
             $menu->posts->add('Create', ['icon' => 'fa-plus', 'route' => 'posts.create']);
             $menu->posts->add('Deleted', ['icon' => 'fa-trash', 'route' => 'posts.trash']);

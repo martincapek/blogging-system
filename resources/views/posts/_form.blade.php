@@ -22,22 +22,27 @@
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder=""
-                       value="{{ $post->title or "" }}">
+                       value="{{ $post->title or old('title') }}">
             </div>
 
             <div class="form-group">
                 <label for="perex">Perex</label>
-                <textarea name="perex" class="form-control" id="perex" placeholder="">{{ $post->perex or "" }}</textarea>
+                <textarea name="perex" class="form-control" id="perex"
+                          placeholder="">{{ $post->perex or old('perex') }}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="text">Content</label>
-                <textarea name="text" class="form-control" id="text" placeholder="">{{ $post->text or "" }}</textarea>
+                <textarea name="text" class="form-control" id="text"
+                          placeholder="">{{ $post->text or old('text') }}</textarea>
             </div>
 
             <div class="form-group">
                 <label>Category</label>
-                <select class="form-control select2" style="width: 100%;">
+                <select class="form-control select2" style="width: 100%;" name="category_id">
+                    @foreach($categories as $c)
+                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                    @endforeach
 
                 </select>
             </div>
@@ -53,7 +58,8 @@
                           </span>
                     <input id="image" class="form-control" type="text" name="image" value="{{ $post->image or "" }}">
                 </div>
-                <img id="image_holder" src="{{ $post->image or "" }}" style="margin-top:15px;max-height:100px;">
+                <img id="image_holder" src="{{ $post->image or old('image') }}"
+                     style="margin-top:15px;max-height:100px;">
 
             </div>
 
@@ -143,9 +149,9 @@
 
             CKEDITOR.replace('text', {
                 filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
+               //  filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token={{csrf_token()}}',
                 filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
+               // filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token={{csrf_token()}}'
             });
         });
     </script>

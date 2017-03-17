@@ -18,17 +18,19 @@
                     @foreach($posts as $post)
                         <tr>
                             <td>{{ $post->title }}</td>
-                            <td class="visible-lg visible-md">{!! $post->text !!}</td>
-                            <td class="visible-lg visible-md">{{ $post->category }}</td>
+                            <td class="visible-lg visible-md">{{ $post->perex }}</td>
+                            <td class="visible-lg visible-md">{{ $post->category->name or "Doesn't have category" }}</td>
                             <td class="visible-lg visible-md">{{ $post->views }}</td>
-                            <td class="visible-lg visible-md">{{ $post->comments }}</td>
+                            <td class="visible-lg visible-md">{{ $post->comments->count() }}</td>
                             <td class="visible-lg visible-md">{{ $post->created_at->diffForHumans() }}</td>
                             <td>
                                 @if(isset($status) && $status == 'deleted')
                                     <a href="{{ route('posts.restore', $post->id) }}"><i class="fa fa-recycle" aria-hidden="true"></i></a>
                                 @else
-                                    <a href="{{ route('posts.edit', $post->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
+                                    <a href="{{ route('posts.edit', $post->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;&nbsp;
+                                    <a href="{{ route('posts.comments', $post->id) }}"><i class="fa fa-comment" aria-hidden="true"></i></a> &nbsp;
                                     <a href="{{ route('posts.destroy', $post->id) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
                                 @endif
                             </td>
                         </tr>

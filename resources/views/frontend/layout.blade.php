@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="/frontend/css/unite-gallery.css">
     <link rel="stylesheet" href="/frontend/css/style.css">
 
+    <meta property="og:url"           content="@yield('og_url')" />
+    <meta property="og:type"          content="@yield('og_type')" />
+    <meta property="og:title"         content="@yield('og_title')" />
+    <meta property="og:description"   content="@yield('og_description')" />
+    <meta property="og:image"         content="@yield('og_image')" />
+</head>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -35,7 +42,14 @@
 
 </head>
 <body>
-
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
 <header class="clearfix">
     <div class="container">
@@ -189,10 +203,12 @@
     });
 
 
-    jQuery("#gallery").unitegallery({
+    $("#gallery").unitegallery({
         tiles_type: "justified"
     });
 
+
+@yield('scripts')
 </script>
 </body>
 </html>
