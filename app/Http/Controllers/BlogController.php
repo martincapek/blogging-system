@@ -27,15 +27,12 @@ class BlogController extends FrontendController
         View::share('categories', Category::all());
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function blogIndex()
     {
 
         $posts = Post::orderBy('created_at', 'DECS')->paginate(6);
+
 
         return view('blog.index', compact('posts'));
     }
@@ -57,7 +54,6 @@ class BlogController extends FrontendController
     {
 
         $cur_cat = Category::where('slug', $category)->firstOrFail();
-
 
 
         $post = Post::where('slug', $id)->where('category_id', $cur_cat->id)->firstOrFail();
@@ -97,29 +93,31 @@ class BlogController extends FrontendController
     }
 
 
-    public function replyComment(Request $request, $comment) {
+    public function replyComment(Request $request, $comment)
+    {
 
     }
 
 
-    public function blogAuthor($id) {
+    public function blogAuthor($id)
+    {
 
         $cur_auth = User::findOrFail($id);
 
         $posts = Post::where('author_id', $id)->orderBy('created_at', 'DESC')->paginate(6);
 
 
-
         return view('blog.index', compact('posts', 'cur_auth'));
     }
 
 
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
 
-      $cur_search = $request->s;
+        $cur_search = $request->s;
 
-      $posts = Post::search($request->s, null, true)->paginate(6);
+        $posts = Post::search($request->s, null, true)->paginate(6);
 
-      return view('blog.index', compact('posts', 'cur_search'));
+        return view('blog.index', compact('posts', 'cur_search'));
     }
 }

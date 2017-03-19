@@ -31,6 +31,9 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'role' => [\Zizaco\Entrust\Middleware\EntrustRole::class],
+        'permission' => [\Zizaco\Entrust\Middleware\EntrustPermission::class],
+        'ability' => [\Zizaco\Entrust\Middleware\EntrustAbility::class],
 
         'api' => [
             'throttle:60,1',

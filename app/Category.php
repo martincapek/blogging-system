@@ -4,6 +4,7 @@ namespace App;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kalnoy\Nestedset\NodeTrait;
 use Jenssegers\Date\Date;
 
@@ -12,6 +13,7 @@ class Category extends Model
 
     use Sluggable;
     use NodeTrait;
+    use SoftDeletes;
 
     protected $table = 'categories';
 

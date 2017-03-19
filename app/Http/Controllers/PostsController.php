@@ -25,7 +25,7 @@ class PostsController extends AdminController
         ];
 
 
-        $posts = Post::all();
+        $posts = Post::orderBy('created_at', 'DECS')->get();
 
 
         return view('posts.index', compact('posts', 'page_info', 'status'));
@@ -58,17 +58,17 @@ class PostsController extends AdminController
 
 
         $this->validate($request, [
-            'title' => 'required|max:255|' . Rule::unique('posts')->where(function ($query) use($request) {
+            'title' => 'required|max:255|' . Rule::unique('posts')->where(function ($query) use ($request) {
                     $query->where('category_id', $request->id);
 
-        }),
+                }),
             'perex' => 'required',
             'text' => 'required',
 //            'image' => 'required'
         ]);
 
 
-        $post = Post::create([
+        $post = [
             'title' => $request->title,
             'perex' => $request->perex,
             'text' => $request->text,
@@ -82,12 +82,16 @@ class PostsController extends AdminController
 //            'og_title' => $request->og_title,
 //            'og_description' => $request->og_description,
 //            'og_image' => $request->og_image
-        ]);
+        ];
 
 
-        $request->session()->flash('success', true);
+        if (Post::create($post)) {
+            session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Post was successfuly created!']);
+        } else {
+            session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Post was not successfuly created! Please try it again or contact admin.']);
+        }
+
         return redirect()->route('posts.list');
-
 
     }
 
@@ -139,7 +143,6 @@ class PostsController extends AdminController
 
         return view('posts.edit', compact('page_info', 'post', 'categories'));
     }
-
 
 
     public function comments($id)
@@ -219,7 +222,7 @@ class PostsController extends AdminController
     {
 
         if (Post::findOrFail($id)->delete()) {
-            session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Post was successfuly deleted! You can restore it in deleted post.']);
+            session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Post was successfuly deleted!']);
         } else {
             session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Post was not successfuly deleted! Please try it again or contact admin.']);
         }

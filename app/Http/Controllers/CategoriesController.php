@@ -71,21 +71,15 @@ class CategoriesController extends AdminController
             $category = Category::create($cat_attr);
         }
 
-        $request->session()->flash('success', true);
+        if ($category) {
+            session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Category was successfuly created!']);
+        } else {
+            session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Category was not successfuly created! Please try it again or contact admin.']);
+        }
         return redirect()->route('categories.list');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -137,7 +131,11 @@ class CategoriesController extends AdminController
             $category->saveAsRoot();
         }
 
-        $request->session()->flash('success', true);
+        if ($category) {
+            session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Category was successfuly edited!']);
+        } else {
+            session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Category was not successfuly edited! Please try it again or contact admin.']);
+        }
         return redirect()->route('categories.list');
     }
 
@@ -149,6 +147,20 @@ class CategoriesController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+
+
+        if ($category->posts->count()) {
+            session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Category has posts. You have to unassing all posts before deleting.']);
+        } else {
+            if (Category::findOrFail($id)->delete()) {
+                session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Category was successfuly deleted!']);
+            } else {
+                session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Category was not successfuly deleted! Please try it again or contact admin.']);
+            }
+        }
+
+
+        return redirect()->route('categories.list');
     }
 }
