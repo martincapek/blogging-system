@@ -31,7 +31,7 @@ class BlogController extends FrontendController
     public function blogIndex()
     {
 
-        $posts = Post::orderBy('created_at', 'DECS')->paginate(6);
+        $posts = Post::orderBy('created_at', 'DECS')->has('category')->paginate(6);
 
 
         return view('blog.index', compact('posts'));
@@ -44,7 +44,7 @@ class BlogController extends FrontendController
         $cur_cat = Category::where('slug', $category)->firstOrFail();
 
 
-        $posts = Post::where('category_id', $cur_cat->id)->paginate(6);
+        $posts = Post::where('category_id', $cur_cat->id)->has('category')->paginate(6);
 
         return view('blog.index', compact('posts', 'cur_cat'));
     }
@@ -104,7 +104,7 @@ class BlogController extends FrontendController
 
         $cur_auth = User::findOrFail($id);
 
-        $posts = Post::where('author_id', $id)->orderBy('created_at', 'DESC')->paginate(6);
+        $posts = Post::where('author_id', $id)->orderBy('created_at', 'DESC')->has('category')->paginate(6);
 
 
         return view('blog.index', compact('posts', 'cur_auth'));
@@ -116,7 +116,8 @@ class BlogController extends FrontendController
 
         $cur_search = $request->s;
 
-        $posts = Post::search($request->s, null, true)->paginate(6);
+        $posts = Post::search($request->s, null, true)->has('category');
+
 
         return view('blog.index', compact('posts', 'cur_search'));
     }

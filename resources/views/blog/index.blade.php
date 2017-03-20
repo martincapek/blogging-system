@@ -25,7 +25,6 @@
         @if($posts->count())
             @foreach($posts as $post)
 
-
                 <div class="col-md-6 portfolio-item">
                     <a href="{{ route('blog.detail', ['category' => $post->category->slug, 'id' => $post->slug]) }}">
                         <img class="img-responsive" src="{{ $post->image }}" alt="">
@@ -47,11 +46,13 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-md-12 text-center">
-            {{ $posts->links() }}
-        </div>
-    </div>
+   @if(!$posts->links())
+       <div class="row">
+           <div class="col-md-12 text-center">
+               {{ $posts->links() }}
+           </div>
+       </div>
+    @endif
 
 @stop
 
