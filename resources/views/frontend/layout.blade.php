@@ -86,6 +86,16 @@
                     <ul class="nav navbar-nav">
                         @include('frontend.custom-menu', array('items' => Menu::get('main_nav')->roots()))
                     </ul>
+
+
+                        <ul class="nav navbar-nav navbar-right">
+                            @if(Auth::user())
+                            <li><a href="/logout">{{ Auth::user()->fullName }} - logout</a></li>
+                            @else
+                                <li><a href="/login">Login</a></li>
+                            @endif
+                        </ul>
+
                 </div>
             </div>
 

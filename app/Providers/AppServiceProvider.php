@@ -15,8 +15,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Event::listen('posts.view', 'App\Events\ViewPostsHandler');
-
-
+        Event::listen('posts.view', 'App\Events\AddLastPostHandler');
     }
 
     /**

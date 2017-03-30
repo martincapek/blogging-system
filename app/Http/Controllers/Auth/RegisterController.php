@@ -7,8 +7,10 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Jrean\UserVerification\Facades\UserVerification;
 use Jrean\UserVerification\Traits\VerifiesUsers;
+use Silber\Bouncer\Bouncer;
 use Validator;
 use Illuminate\Http\Request;
+use Jrean\UserVerification\Facades\UserVerification as UserVerificationFacade;
 
 class RegisterController extends Controller
 {
@@ -23,15 +25,19 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
-
-    use VerifiesUsers;
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
     protected $redirectTo = '/admin';
+
+    protected $redirectAfterVerification = '/login';
+
+    use RegistersUsers;
+
+    use VerifiesUsers;
+
 
     /**
      * Create a new controller instance.
@@ -86,11 +92,53 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         $user = $this->create($request->all());
-        $this->guard()->login($user);
 
         UserVerification::generate($user);
         UserVerification::send($user, trans('laravel-user-verification::user-verification.verification_email_subject'));
 
-        return redirect($this->redirectPath());
+        $user->assign('guest');
+
+        return redirect('/login')->with('status', 'Check your email and verify your account.');
     }
+
+
+
+    protected function validateRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email'
+        ]);
+
+        if ($validator->fails()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Handle the user verification.
+     *
+     * @param  string  $token
+     * @return Response
+     */
+    public function getVerification(Request $request, $token)
+    {
+        if (! $this->validateRequest($request)) {
+            return redirect($this->redirectIfVerificationFails());
+        }
+
+        try {
+            UserVerificationFacade::process($request->input('email'), $token, $this->userTable());
+        } catch (UserNotFoundException $e) {
+            return redirect($this->redirectIfVerificationFails());
+        } catch (UserIsVerifiedException $e) {
+            return redirect($this->redirectIfVerified());
+        } catch (TokenMismatchException $e) {
+            return redirect($this->redirectIfVerificationFails());
+        }
+
+        return redirect($this->redirectAfterVerification())->with('status', 'Your account is succesfully verified.');
+    }
+
 }

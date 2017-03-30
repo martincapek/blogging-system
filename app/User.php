@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Jrean\UserVerification\Traits\UserVerification;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
-
+use Silber\Bouncer\Database\HasRolesAndAbilities;
+use DB;
 
 class User extends Authenticatable
 {
     use Notifiable;
     use UserVerification;
-    use EntrustUserTrait;
+    use HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
@@ -40,5 +40,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Comment', 'author_id');
     }
 
+
+    public function role() {
+        $role_id = DB::table('assigned_roles')->where('entity_id', $this->id)->first()->role_id;
+        return  DB::table('roles')->where('id', $role_id)->first()->name;
+    }
 
 }

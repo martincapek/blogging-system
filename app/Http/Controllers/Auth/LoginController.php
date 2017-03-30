@@ -39,14 +39,40 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function authenticated(Request $request, $user)
     {
 
-        if ($user->can('access-backend')) {
+
+        if ($user->isAn('admin', 'moderator')) {
             return redirect()->intended('/admin');
+        } else {
+            return redirect()->intended('/');
         }
 
-        return redirect()->intended('/');
 
+
+    }
+
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect('/login');
     }
 }

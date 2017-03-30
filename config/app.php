@@ -167,11 +167,11 @@ return [
          * Package Service Providers...
          */
         Jrean\UserVerification\UserVerificationServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Jenssegers\Date\DateServiceProvider::class,
+        Silber\Bouncer\BouncerServiceProvider::class,
         //
 
         /*
@@ -239,13 +239,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Menu'       => Lavary\Menu\Facade::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Date' => Jenssegers\Date\Date::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Menu'      => Lavary\Menu\Facade::class
+        'Bouncer' => Silber\Bouncer\BouncerFacade::class,
 
     ],
 

@@ -42,6 +42,6 @@ class ViewPostsHandler
         // Then increment the value on the model so that we can
         // display it. This is because the increment method
         // doesn't increment the value on the model.
-        $post->view_counter += 1;
+        $post->views += 1;
     }
 }

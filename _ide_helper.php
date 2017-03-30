@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.30 on 2017-03-17.
+ * Generated for Laravel 5.3.31 on 2017-03-30.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11171,117 +11171,6 @@ namespace Jrean\UserVerification\Facades {
     }         
 }
     
-namespace Zizaco\Entrust {
-
-    class EntrustFacade {
-        
-        /**
-         * Checks if the current user has a role by its name
-         *
-         * @param string $name Role name.
-         * @return bool 
-         * @static 
-         */
-        public static function hasRole($role, $requireAll = false)
-        {
-            return \Zizaco\Entrust\Entrust::hasRole($role, $requireAll);
-        }
-        
-        /**
-         * Check if the current user has a permission by its name
-         *
-         * @param string $permission Permission string.
-         * @return bool 
-         * @static 
-         */
-        public static function can($permission, $requireAll = false)
-        {
-            return \Zizaco\Entrust\Entrust::can($permission, $requireAll);
-        }
-        
-        /**
-         * Check if the current user has a role or permission by its name
-         *
-         * @param array|string $roles The role(s) needed.
-         * @param array|string $permissions The permission(s) needed.
-         * @param array $options The Options.
-         * @return bool 
-         * @static 
-         */
-        public static function ability($roles, $permissions, $options = array())
-        {
-            return \Zizaco\Entrust\Entrust::ability($roles, $permissions, $options);
-        }
-        
-        /**
-         * Get the currently authenticated user or null.
-         *
-         * @return \Zizaco\Entrust\Illuminate\Auth\UserInterface|null 
-         * @static 
-         */
-        public static function user()
-        {
-            return \Zizaco\Entrust\Entrust::user();
-        }
-        
-        /**
-         * Filters a route for a role or set of roles.
-         * 
-         * If the third parameter is null then abort with status code 403.
-         * Otherwise the $result is returned.
-         *
-         * @param string $route Route pattern. i.e: "admin/*"
-         * @param array|string $roles The role(s) needed
-         * @param mixed $result i.e: Redirect::to('/')
-         * @param bool $requireAll User must have all roles
-         * @return mixed 
-         * @static 
-         */
-        public static function routeNeedsRole($route, $roles, $result = null, $requireAll = true)
-        {
-            return \Zizaco\Entrust\Entrust::routeNeedsRole($route, $roles, $result, $requireAll);
-        }
-        
-        /**
-         * Filters a route for a permission or set of permissions.
-         * 
-         * If the third parameter is null then abort with status code 403.
-         * Otherwise the $result is returned.
-         *
-         * @param string $route Route pattern. i.e: "admin/*"
-         * @param array|string $permissions The permission(s) needed
-         * @param mixed $result i.e: Redirect::to('/')
-         * @param bool $requireAll User must have all permissions
-         * @return mixed 
-         * @static 
-         */
-        public static function routeNeedsPermission($route, $permissions, $result = null, $requireAll = true)
-        {
-            return \Zizaco\Entrust\Entrust::routeNeedsPermission($route, $permissions, $result, $requireAll);
-        }
-        
-        /**
-         * Filters a route for role(s) and/or permission(s).
-         * 
-         * If the third parameter is null then abort with status code 403.
-         * Otherwise the $result is returned.
-         *
-         * @param string $route Route pattern. i.e: "admin/*"
-         * @param array|string $roles The role(s) needed
-         * @param array|string $permissions The permission(s) needed
-         * @param mixed $result i.e: Redirect::to('/')
-         * @param bool $requireAll User must have all roles and permissions
-         * @return void 
-         * @static 
-         */
-        public static function routeNeedsRoleOrPermission($route, $roles, $permissions, $result = null, $requireAll = false)
-        {
-            \Zizaco\Entrust\Entrust::routeNeedsRoleOrPermission($route, $roles, $permissions, $result, $requireAll);
-        }
-        
-    }         
-}
-    
 namespace Lavary\Menu {
 
     class Facade {
@@ -12075,6 +11964,348 @@ namespace Intervention\Image\Facades {
         public static function cache($callback, $lifetime = null, $returnObj = false)
         {
             return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
+        }
+        
+    }         
+}
+    
+namespace Silber\Bouncer {
+
+    class BouncerFacade {
+        
+        /**
+         * Create a new Bouncer instance.
+         *
+         * @param \Illuminate\Database\Eloquent\Model|null $user
+         * @return static 
+         * @static 
+         */
+        public static function create($user = null)
+        {
+            return \Silber\Bouncer\Bouncer::create($user);
+        }
+        
+        /**
+         * Create a bouncer factory instance.
+         *
+         * @param \Illuminate\Database\Eloquent\Model|null $user
+         * @return \Silber\Bouncer\Factory. 
+         * @static 
+         */
+        public static function make($user = null)
+        {
+            return \Silber\Bouncer\Bouncer::make($user);
+        }
+        
+        /**
+         * Register a seeder callback.
+         *
+         * @param \Closure|string $seeder
+         * @return $this 
+         * @static 
+         */
+        public static function seeder($seeder)
+        {
+            return \Silber\Bouncer\Bouncer::seeder($seeder);
+        }
+        
+        /**
+         * Run the registered seeders.
+         *
+         * @return $this 
+         * @static 
+         */
+        public static function seed()
+        {
+            return \Silber\Bouncer\Bouncer::seed();
+        }
+        
+        /**
+         * Start a chain, to allow the given authority an ability.
+         *
+         * @param \Illuminate\Database\Eloquent\Model|string $authority
+         * @return \Silber\Bouncer\Conductors\GivesAbility 
+         * @static 
+         */
+        public static function allow($authority)
+        {
+            return \Silber\Bouncer\Bouncer::allow($authority);
+        }
+        
+        /**
+         * Start a chain, to disallow the given authority an ability.
+         *
+         * @param \Illuminate\Database\Eloquent\Model|string $authority
+         * @return \Silber\Bouncer\Conductors\RemovesAbility 
+         * @static 
+         */
+        public static function disallow($authority)
+        {
+            return \Silber\Bouncer\Bouncer::disallow($authority);
+        }
+        
+        /**
+         * Start a chain, to forbid the given authority an ability.
+         *
+         * @param \Illuminate\Database\Eloquent\Model|string $authority
+         * @return \Silber\Bouncer\Conductors\GivesAbility 
+         * @static 
+         */
+        public static function forbid($authority)
+        {
+            return \Silber\Bouncer\Bouncer::forbid($authority);
+        }
+        
+        /**
+         * Start a chain, to unforbid the given authority an ability.
+         *
+         * @param \Illuminate\Database\Eloquent\Model|string $authority
+         * @return \Silber\Bouncer\Conductors\RemovesAbility 
+         * @static 
+         */
+        public static function unforbid($authority)
+        {
+            return \Silber\Bouncer\Bouncer::unforbid($authority);
+        }
+        
+        /**
+         * Start a chain, to assign the given role to a model.
+         *
+         * @param \Silber\Bouncer\Database\Role|string $role
+         * @return \Silber\Bouncer\Conductors\AssignsRole 
+         * @static 
+         */
+        public static function assign($role)
+        {
+            return \Silber\Bouncer\Bouncer::assign($role);
+        }
+        
+        /**
+         * Start a chain, to retract the given role from a model.
+         *
+         * @param \Silber\Bouncer\Database\Role|string $role
+         * @return \Silber\Bouncer\Conductors\RemovesRole 
+         * @static 
+         */
+        public static function retract($role)
+        {
+            return \Silber\Bouncer\Bouncer::retract($role);
+        }
+        
+        /**
+         * Start a chain, to check if the given authority has a certain role.
+         *
+         * @param \Illuminate\Database\Eloquent\Model $authority
+         * @return \Silber\Bouncer\Conductors\ChecksRole 
+         * @static 
+         */
+        public static function is($authority)
+        {
+            return \Silber\Bouncer\Bouncer::is($authority);
+        }
+        
+        /**
+         * Use the given cache instance.
+         *
+         * @param \Illuminate\Contracts\Cache\Store $cache
+         * @return $this 
+         * @static 
+         */
+        public static function cache($cache = null)
+        {
+            return \Silber\Bouncer\Bouncer::cache($cache);
+        }
+        
+        /**
+         * Fully disable all query caching.
+         *
+         * @return $this 
+         * @static 
+         */
+        public static function dontCache()
+        {
+            return \Silber\Bouncer\Bouncer::dontCache();
+        }
+        
+        /**
+         * Clear the cache.
+         *
+         * @param null|\Illuminate\Database\Eloquent\Model $authority
+         * @return $this 
+         * @static 
+         */
+        public static function refresh($authority = null)
+        {
+            return \Silber\Bouncer\Bouncer::refresh($authority);
+        }
+        
+        /**
+         * Clear the cache for the given authority.
+         *
+         * @param \Illuminate\Database\Eloquent\Model $authority
+         * @return $this 
+         * @static 
+         */
+        public static function refreshFor($authority)
+        {
+            return \Silber\Bouncer\Bouncer::refreshFor($authority);
+        }
+        
+        /**
+         * Set the access gate instance.
+         *
+         * @param \Illuminate\Contracts\Auth\Access\Gate $gate
+         * @return $this 
+         * @static 
+         */
+        public static function setGate($gate)
+        {
+            return \Silber\Bouncer\Bouncer::setGate($gate);
+        }
+        
+        /**
+         * Get the gate instance.
+         *
+         * @return \Illuminate\Contracts\Auth\Access\Gate|null 
+         * @throws \RuntimeException
+         * @static 
+         */
+        public static function getGate($throw = false)
+        {
+            return \Silber\Bouncer\Bouncer::getGate($throw);
+        }
+        
+        /**
+         * Determine whether the clipboard used is a cached clipboard.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function usesCachedClipboard()
+        {
+            return \Silber\Bouncer\Bouncer::usesCachedClipboard();
+        }
+        
+        /**
+         * Define a new ability using a callback.
+         *
+         * @param string $ability
+         * @param callable|string $callback
+         * @return $this 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function define($ability, $callback)
+        {
+            return \Silber\Bouncer\Bouncer::define($ability, $callback);
+        }
+        
+        /**
+         * Determine if the given ability should be granted for the current authority.
+         *
+         * @param string $ability
+         * @param array|mixed $arguments
+         * @return bool 
+         * @static 
+         */
+        public static function allows($ability, $arguments = array())
+        {
+            return \Silber\Bouncer\Bouncer::allows($ability, $arguments);
+        }
+        
+        /**
+         * Determine if the given ability should be denied for the current authority.
+         *
+         * @param string $ability
+         * @param array|mixed $arguments
+         * @return bool 
+         * @static 
+         */
+        public static function denies($ability, $arguments = array())
+        {
+            return \Silber\Bouncer\Bouncer::denies($ability, $arguments);
+        }
+        
+        /**
+         * Get an instance of the role model.
+         *
+         * @param array $attributes
+         * @return \Silber\Bouncer\Database\Role 
+         * @static 
+         */
+        public static function role($attributes = array())
+        {
+            return \Silber\Bouncer\Bouncer::role($attributes);
+        }
+        
+        /**
+         * Get an instance of the ability model.
+         *
+         * @param array $attributes
+         * @return \Silber\Bouncer\Database\Ability 
+         * @static 
+         */
+        public static function ability($attributes = array())
+        {
+            return \Silber\Bouncer\Bouncer::ability($attributes);
+        }
+        
+        /**
+         * Register an attribute/callback to determine if a model is owned by a given authority.
+         *
+         * @param string|\Closure $model
+         * @param string|\Closure|null $attribute
+         * @return void 
+         * @static 
+         */
+        public static function ownedVia($model, $attribute = null)
+        {
+            \Silber\Bouncer\Bouncer::ownedVia($model, $attribute);
+        }
+        
+        /**
+         * Set the model to be used for abilities.
+         *
+         * @param string $model
+         * @static 
+         */
+        public static function useAbilityModel($model)
+        {
+            return \Silber\Bouncer\Bouncer::useAbilityModel($model);
+        }
+        
+        /**
+         * Set the model to be used for roles.
+         *
+         * @param string $model
+         * @static 
+         */
+        public static function useRoleModel($model)
+        {
+            return \Silber\Bouncer\Bouncer::useRoleModel($model);
+        }
+        
+        /**
+         * Set the model to be used for users.
+         *
+         * @param string $model
+         * @static 
+         */
+        public static function useUserModel($model)
+        {
+            return \Silber\Bouncer\Bouncer::useUserModel($model);
+        }
+        
+        /**
+         * Set custom table names.
+         *
+         * @param array $map
+         * @return void 
+         * @static 
+         */
+        public static function tables($map)
+        {
+            \Silber\Bouncer\Bouncer::tables($map);
         }
         
     }         
@@ -13982,8 +14213,6 @@ namespace {
     
     class UserVerification extends \Jrean\UserVerification\Facades\UserVerification {}
     
-    class Entrust extends \Zizaco\Entrust\EntrustFacade {}
-    
     class Menu extends \Lavary\Menu\Facade {}
     
     class Hashids extends \Vinkla\Hashids\Facades\Hashids {}
@@ -13993,6 +14222,8 @@ namespace {
     class Date extends \Jenssegers\Date\Date {}
     
     class Image extends \Intervention\Image\Facades\Image {}
+    
+    class Bouncer extends \Silber\Bouncer\BouncerFacade {}
     
 }
 

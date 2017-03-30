@@ -13,19 +13,34 @@ use Jenssegers\Date\Date;
 
 class PostsController extends AdminController
 {
+
     /**
-     * Display a listing of the resource.
+     * Display all posts.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
+
+
+        $user = $request->user();
+
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
+
+
         $page_info = [
             'page_name' => trans('pages.posts_list')
         ];
 
 
-        $posts = Post::orderBy('created_at', 'DECS')->get();
+        if ($user->isAn('admin')) {
+            $posts = Post::orderBy('created_at', 'DECS')->get();
+        } else {
+            $posts = Post::where('author_id', $user->id)->orderBy('created_at', 'DECS')->get();
+        }
 
 
         return view('posts.index', compact('posts', 'page_info', 'status'));
@@ -34,10 +49,15 @@ class PostsController extends AdminController
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
+
         $page_info = [
             'page_name' => trans('pages.posts_create')
         ];
@@ -56,6 +76,9 @@ class PostsController extends AdminController
     public function store(Request $request)
     {
 
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
 
         $this->validate($request, [
             'title' => 'required|max:255|' . Rule::unique('posts')->where(function ($query) use ($request) {
@@ -64,7 +87,6 @@ class PostsController extends AdminController
                 }),
             'perex' => 'required',
             'text' => 'required',
-//            'image' => 'required'
         ]);
 
 
@@ -76,12 +98,7 @@ class PostsController extends AdminController
             'author_id' => \Auth::user()->id,
             'publish' => $request->publish,
             'category_id' => $request->category_id,
-//            'seo_title' => $request->seo_title,
-//            'seo_description' => $request->seo_description,
-//            'seo_tags' => $request->seo_tags,
-//            'og_title' => $request->og_title,
-//            'og_description' => $request->og_description,
-//            'og_image' => $request->og_image
+
         ];
 
 
@@ -95,16 +112,29 @@ class PostsController extends AdminController
 
     }
 
-    public function trash()
+    /**
+     * Show deleted posts.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function trash(Request $request)
     {
+
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
 
         $page_info = [
             'page_name' => trans('pages.posts_deleted'),
             'page_destc' => "dad"
         ];
 
-        $posts = Post::onlyTrashed()->get();
-
+        if ($request->user()->isAn('admin')) {
+            $posts = Post::onlyTrashed()->orderBy('created_at', 'DECS')->get();
+        } else {
+            $posts = Post::onlyTrashed()->where('author_id', $request->user()->id)->orderBy('created_at', 'DECS')->get();
+        }
 
         $status = "deleted";
 
@@ -113,10 +143,26 @@ class PostsController extends AdminController
 
     }
 
-
-    public function restore($id)
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore(Request $request, $id)
     {
-        if (Post::withTrashed()->findOrFail($id)->restore()) {
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
+
+        $post = Post::withTrashed()->findOrFail($id);
+
+        if($post->author_id != $request->user()->id) {
+            abort(403);
+        }
+
+
+
+        if ($post->restore()) {
             session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Post was successfuly restored!']);
         } else {
             session()->flash('  status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Post was not successfuly restored! Please try it again or contact admin.']);
@@ -129,46 +175,32 @@ class PostsController extends AdminController
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
+
         $page_info = [
             'page_name' => trans('pages.posts_edit')
         ];
 
         $post = Post::findOrFail($id);
+
+        if($post->author_id != $request->user()->id) {
+            abort(403);
+        }
+
         $categories = Category::all();
 
         return view('posts.edit', compact('page_info', 'post', 'categories'));
     }
 
-
-    public function comments($id)
-    {
-        $page_info = [
-            'page_name' => 'Comments'
-        ];
-
-        $comments = Post::findOrFail($id)->comments;
-
-        return view('posts.comments', compact('page_info', 'comments'));
-    }
-
-
-    public function destroyComment($id)
-    {
-
-        if (Comment::findOrFail($id)->delete()) {
-            session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Comment was successfuly deleted!']);
-        } else {
-            session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Comment was not successfuly deleted! Please try it again or contact admin.']);
-        }
-
-
-        return redirect()->back();
-    }
 
     /**
      * Update the specified resource in storage.
@@ -179,28 +211,31 @@ class PostsController extends AdminController
      */
     public function update(Request $request, $id)
     {
+
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
+
+
         $this->validate($request, [
             'title' => 'required|max:255|unique:posts,title,' . $id,
             'perex' => 'required',
             'text' => 'required',
-//            'image' => 'required'
         ]);
 
 
         $post = Post::findOrFail($id);
+
+        if($post->author_id != $request->user()->id) {
+            abort(403);
+        }
+
 
         $post->title = $request->title;
         $post->perex = $request->perex;
         $post->text = $request->text;
         $post->image = $request->image;
         $post->category_id = $request->category_id;
-//        $post->seo_title = $request->seo_title;
-//        $post->seo_description = $request->seo_description;
-//        $post->seo_tags = $request->seo_tags;
-//        $post->og_title = $request->og_title;
-//        $post->og_description = $request->og_description;
-//        $post->og_tags = $request->og_tags;
-//        $post->og_image = $request->og_image;
 
 
         if ($post->save()) {
@@ -215,13 +250,23 @@ class PostsController extends AdminController
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
 
-        if (Post::findOrFail($id)->delete()) {
+        if ($request->user()->isNot('admin', 'moderator')) {
+            abort(403);
+        }
+        $post = Post::findOrFail($id);
+
+        if($post->author_id != $request->user()->id) {
+            abort(403);
+        }
+
+        if ($post->delete()) {
             session()->flash('status', ['type' => 'success', 'caption' => 'Cool!', 'message' => 'Post was successfuly deleted!']);
         } else {
             session()->flash('status', ['type' => 'danger', 'caption' => 'Opps..', 'message' => 'Post was not successfuly deleted! Please try it again or contact admin.']);

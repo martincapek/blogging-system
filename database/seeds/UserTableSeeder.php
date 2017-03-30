@@ -18,5 +18,21 @@ class UserTableSeeder extends Seeder
             'verified' => 1,
             'created_at' => \Carbon\Carbon::now()
         ]);
+
+        DB::table('users')->insert([
+            'name' => "Moderator",
+            'email' => 'moderator@blog.cz',
+            'password' => Hash::make('moderator123'),
+            'verified' => 1,
+            'created_at' => \Carbon\Carbon::now()
+        ]);
+
+        DB::table('users')->insert([
+            'name' => "Guest",
+            'email' => 'guest@blog.cz',
+            'password' => Hash::make('guest123'),
+            'verified' => 1,
+            'created_at' => \Carbon\Carbon::now()
+        ]);
     }
 }

@@ -8,7 +8,7 @@
 
 </div>
 {{ csrf_field() }}
-<div class="col-md-6">
+<div class="col-md-12">
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">Basic info</h3>

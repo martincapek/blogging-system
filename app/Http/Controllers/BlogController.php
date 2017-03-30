@@ -7,6 +7,7 @@ use App\Comment;
 use App\Post;
 use Illuminate\Http\Request;
 use Event;
+use Illuminate\Support\Facades\Cache;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
@@ -23,8 +24,19 @@ class BlogController extends FrontendController
         $devided_by = (int)floor(Category::all()->count() / 2);
         $devided_by = ($devided_by == 0) ? 1 : $devided_by;
 
+        $lastSawPosts = [];
+        if (Cache::get('lastSawPosts')) {
+            foreach (Cache::get('lastSawPosts') as $item) {
+                $lastSawPosts[] = Post::find($item);
+            }
+
+        }
+
+
+
         View::share('devided_by', $devided_by);
         View::share('categories', Category::all());
+        View::share('lastSawPosts', $lastSawPosts);
     }
 
 
@@ -61,7 +73,7 @@ class BlogController extends FrontendController
 
         Event::fire('posts.view', $post);
 
-        $comments = Comment::where('post_id', $post->id)->orderBy('created_at', 'DESC')->get();
+        $comments = Comment::where('post_id', $post->id)->orderBy('created_at', 'DESC')->allowed()->get();
 
         return view('blog.detail', compact('post', 'cur_cat', 'devided_by', 'comments'));
     }
@@ -87,15 +99,9 @@ class BlogController extends FrontendController
                 'post_id' => $post
             ]);
 
-            return Redirect::to(URL::previous() . "#comment-form");
+            return Redirect::to(URL::previous() . "#comment-form")->with('status', 'Comment addded, you have to wait to allow from admin.');
 
         }
-    }
-
-
-    public function replyComment(Request $request, $comment)
-    {
-
     }
 
 
@@ -114,9 +120,9 @@ class BlogController extends FrontendController
     public function search(Request $request)
     {
 
-        $cur_search = $request->s;
+        $cur_search = $request->search;
 
-        $posts = Post::search($request->s, null, true)->has('category');
+        $posts = Post::search($request->search, null, true)->has('category')->paginate(6);
 
 
         return view('blog.index', compact('posts', 'cur_search'));

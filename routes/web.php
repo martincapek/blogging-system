@@ -14,6 +14,10 @@
 
 Auth::routes();
 
+Route::get('/logout', function() {
+    Auth::logout();
+    return redirect()->back();
+});
 
 Route::get('email-verification/error', 'Auth\RegisterController@getVerificationError')->name('email-verification.error');
 Route::get('email-verification/check/{token}', 'Auth\RegisterController@getVerification')->name('email-verification.check');
@@ -74,7 +78,7 @@ Route::group(['prefix' => 'blog'], function() {
         'uses' => 'BlogController@blogCategory'
     ]);
 
-    Route::post('/search/', [
+    Route::get('/search/', [
         'as' => 'blog.search',
         'uses' => 'BlogController@search'
     ]);
@@ -104,18 +108,14 @@ Route::group(['prefix' => 'blog'], function() {
 
 
 
-
-Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'permission:access-backend']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'isVerified']], function () {
     Route::get('/', [
         'as' => 'home',
         'uses' => 'HomeController@index',
 
     ]);
 
-    Route::get('/users', [
-        'as' => 'users.list',
-        'uses' => 'UsersController@index'
-    ]);
+
 
 
     Route::group(['prefix' => 'posts'], function () {
@@ -123,65 +123,71 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'permission:a
         Route::get('/', [
             'as' => 'posts.list',
             'uses' => 'PostsController@index',
-            'middleware' => 'permission:list-post'
+           
         ]);
 
 
         Route::get('/deleted/restore/{id}', [
             'as' => 'posts.restore',
             'uses' => 'PostsController@restore',
-            'middleware' => 'permission:restore-post'
+           
         ]);
 
         Route::get('/create', [
             'as' => 'posts.create',
             'uses' => 'PostsController@create',
-            'middleware' => 'permission:create-post'
+           
         ]);
 
         Route::get('/edit/{id}', [
             'as' => 'posts.edit',
             'uses' => 'PostsController@edit',
-            'middleware' => 'permission:edit-post'
+           
         ]);
 
         Route::get('/comments/{id}', [
             'as' => 'posts.comments',
-            'uses' => 'PostsController@comments',
-            'middleware' => 'permission:list-comment'
+            'uses' => 'CommentsController@index',
+           
         ]);
 
         Route::get('/comment/delete/{id}', [
             'as' => 'comment.destroy',
-            'uses' => 'PostsController@destroyComment',
-            'middleware' => 'permission:delete-comment'
+            'uses' => 'CommentsController@destroy',
+           
+        ]);
+
+        Route::get('/comment/allow/{id}', [
+            'as' => 'comment.allow',
+            'uses' => 'CommentsController@allow',
+
         ]);
 
 
         Route::post('/store', [
             'as' => 'posts.store',
             'uses' => 'PostsController@store',
-            'middleware' => 'permission:create-post'
+           
 
         ]);
 
         Route::post('/update/{id}', [
             'as' => 'posts.update',
             'uses' => 'PostsController@update',
-            'middleware' => 'permission:edit-post'
+           
         ]);
 
 
         Route::get('/destroy/{id}', [
             'as' => 'posts.destroy',
             'uses' => 'PostsController@destroy',
-            'middleware' => 'permission:delete-post'
+           
         ]);
 
         Route::get('/trash', [
             'as' => 'posts.trash',
             'uses' => 'PostsController@trash',
-            'middleware' => 'permission:restore-post'
+           
 
         ]);
 
@@ -195,14 +201,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'permission:a
         Route::get('/', [
             'as' => 'categories.list',
             'uses' => 'CategoriesController@index',
-            'middleware' => 'permission:list-category'
+           
         ]);
 
 
         Route::get('/deleted/restore/{id}', [
             'as' => 'categories.restore',
             'uses' => 'CategoriesController@restore',
-            'middleware' => 'permission:restore-category'
+           
 
         ]);
 
@@ -238,6 +244,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'permission:a
     });
 
 
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/', [
+            'as' => 'users.list',
+            'uses' => 'UsersController@index'
+        ]);
+
+        Route::get('/edit/{id}', [
+            'as' => 'users.edit',
+            'uses' => 'UsersController@edit'
+        ]);
+
+        Route::post('/update/{id}', [
+            'as' => 'users.update',
+            'uses' => 'UsersController@update'
+        ]);
+
+    });
     
 
 

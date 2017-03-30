@@ -2,13 +2,12 @@
 <div class="well">
     <h4>Blog Search</h4>
     <div class="input-group" style="width: 100%;">
-        <form action="{{ route('blog.search') }}" method="post">
-            {{ csrf_field() }}
+        <form action="{{ route('blog.search') }}" method="get">
 
             <div class="input-group">
-                <input type="text" class="form-control" name="s" placeholder="Search for...">
+                <input type="text" class="form-control" name="search" placeholder="Search for...">
                 <span class="input-group-btn">
-        <button class="btn btn-default" type="button"> <span class="glyphicon glyphicon-search"></span></button>
+        <button class="btn btn-default" type="submit"> <span class="glyphicon glyphicon-search"></span></button>
                 </span>
             </div>
 
@@ -43,12 +42,31 @@
 
 </div>
 
-<!-- Blog Categories Well -->
-<div class="well">
-    <h4>Latest posts</h4>
-    <div class="row">
 
+@if($lastSawPosts)
 
+    <!-- Blog Categories Well -->
+    <div class="well">
+        <h4>Latest posts</h4>
+        <div class="row">
+            @foreach($lastSawPosts as $lastSawPost)
+                @if($lastSawPost != null)
+                    <div class="col-md-12 portfolio-item">
+                        <a href="{{ route('blog.detail', ['category' => $lastSawPost->category->slug, 'id' => $lastSawPost->slug]) }}">
+                            <img class="img-responsive" src="{{ $lastSawPost->image }}" alt="">
+                        </a>
+                        <h3>
+
+                            <a href="{{ route('blog.detail', ['category' => $lastSawPost->category->slug, 'id' => $lastSawPost->slug]) }}">{{ $lastSawPost->title }}</a>
+                        </h3>
+
+                        <p>{{ $lastSawPost->perex }}</p>
+
+                    </div>
+                @endif
+            @endforeach
+        </div>
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
-</div>
+
+@endif

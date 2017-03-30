@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->longText('text');
             $table->text('image');
             $table->integer('category_id');
-            $table->integer('views')->nullable();
+            $table->integer('views')->default(0);
             $table->integer('author_id')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();

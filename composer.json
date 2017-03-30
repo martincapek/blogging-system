@@ -9,7 +9,6 @@
         "laravel/framework": "5.3.*",
         "nicolaslopezj/searchable": "1.*",
         "jrean/laravel-user-verification": "^3.0",
-        "zizaco/entrust": "5.2.x-dev",
         "lavary/laravel-menu": "^1.6",
         "vinkla/hashids": "^2.4",
         "jenssegers/date": "^3.2",
@@ -20,7 +19,8 @@
         "cviebrock/eloquent-sluggable": "4.1",
         "laracasts/flash": "^2.0",
         "kalnoy/nestedset": "^4.2",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "silber/bouncer": "v1.0.0-beta.2"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

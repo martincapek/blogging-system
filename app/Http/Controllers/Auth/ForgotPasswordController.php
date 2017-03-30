@@ -18,6 +18,13 @@ class ForgotPasswordController extends Controller
     |
     */
 
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
     use SendsPasswordResetEmails;
 
     /**
@@ -29,4 +36,18 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+
+    /**
+     * Get the response for a successful password reset link.
+     *
+     * @param  string  $response
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendResetLinkResponse($response)
+    {
+        return redirect('/login')->with('status', trans($response));
+    }
+
+
 }

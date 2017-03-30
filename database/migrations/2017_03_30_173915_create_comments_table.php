@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Kalnoy\Nestedset\NestedSet;
 
 class CreateCommentsTable extends Migration
 {
@@ -15,8 +14,6 @@ class CreateCommentsTable extends Migration
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
-
-            NestedSet::columns($table);
             $table->increments('id');
             $table->integer('author_id')->references('id')->on('users');
             $table->integer('post_id')->references('id')->on('posts');
@@ -39,3 +36,4 @@ class CreateCommentsTable extends Migration
         Schema::drop('comments');
     }
 }
+

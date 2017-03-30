@@ -53,9 +53,11 @@
                             class="fb-xfbml-parse-ignore" target="_blank"
                             href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}&amp;src=sdkpreparse">Share</a>
                 </div>
+
                 <!-- Comments Form -->
 
                 @if(Auth::user())
+                    <hr>
                     <div id="comment-form" class="well">
                         <h4>Leave a Comment:</h4>
                         @if (count($errors) > 0)
@@ -64,6 +66,15 @@
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        @if (Session::get('status'))
+                            <div class="alert alert-success">
+                                <ul>
+                                        <li>{{ Session::get('status') }}</li>
+
                                 </ul>
                             </div>
                         @endif

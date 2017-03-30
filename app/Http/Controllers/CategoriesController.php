@@ -10,6 +10,28 @@ use App\Http\Requests;
 class CategoriesController extends AdminController
 {
     /**
+     * CategoriesController constructor.
+     * @param Request $request
+     */
+
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+
+        $this->middleware(function ($request, $next) {
+
+            if ($request->user()->isNot('admin')) {
+                abort(403);
+            }
+
+
+            return $next($request);
+        });
+
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,7 +43,7 @@ class CategoriesController extends AdminController
             'page_name' => 'Categories List'
         ];
 
-        $categories = Category::withDepth()->get()->toTree();
+        $categories = Category::all();
 
         return view('categories.index', compact('page_info', 'categories'));
     }
@@ -37,11 +59,8 @@ class CategoriesController extends AdminController
             'page_name' => 'Create new Category'
         ];
 
-        $categories = Category::withDepth()->get()->toTree();
 
-
-
-        return view('categories.create', compact('page_info', 'categories'));
+        return view('categories.create', compact('page_info'));
     }
 
     /**

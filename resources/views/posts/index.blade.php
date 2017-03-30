@@ -28,19 +28,14 @@
                                     <a href="{{ route('posts.restore', $post->id) }}"><i class="fa fa-recycle"
                                                                                          aria-hidden="true"></i></a>
                                 @else
-                                    @permission('edit-post')
                                     <a href="{{ route('posts.edit', $post->id) }}"><i class="fa fa-pencil"
                                                                                       aria-hidden="true"></i></a>
-                                    @endpermission('edit-post')&nbsp;&nbsp;
-                                    @permission('list-comment')
+                                    &nbsp;
                                     <a href="{{ route('posts.comments', $post->id) }}"><i class="fa fa-comment"
                                                                                           aria-hidden="true"></i></a>
-                                    @endpermission('list-comment')
                                     &nbsp;
-                                    @permission('delete-post')
                                     <a href="{{ route('posts.destroy', $post->id) }}"><i class="fa fa-trash"
                                                                                          aria-hidden="true"></i></a>
-                                    @endpermission('delete-post')
 
                                 @endif
                             </td>

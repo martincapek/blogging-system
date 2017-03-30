@@ -15,7 +15,7 @@
                 </div>
             @endif
             @if($cur_cat->description)
-               <div class="col-md-8"> <p>{{$cur_cat->description}}</p></div>
+                <div class="col-md-8"><p>{{$cur_cat->description}}</p></div>
             @endif
         </div>
         <hr>
@@ -27,7 +27,7 @@
 
                 <div class="col-md-6 portfolio-item">
                     <a href="{{ route('blog.detail', ['category' => $post->category->slug, 'id' => $post->slug]) }}">
-                        <img class="img-responsive" src="{{ $post->image }}" alt="">
+                        <img class="img-responsive" src="{{ empty($post->image)?"/media/images/placeholder.jpg":$post->image }}" alt="">
                     </a>
                     <h3>
 
@@ -46,12 +46,16 @@
     </div>
 
 
-   @if(!$posts->links())
-       <div class="row">
-           <div class="col-md-12 text-center">
-               {{ $posts->links() }}
-           </div>
-       </div>
+    @if($posts->links())
+        <div class="row">
+            <div class="col-md-12 text-center">
+                @if(Request::only('search'))
+                    {{ $posts->appends(Request::only('search'))->links() }}
+                @else
+                    {{ $posts->links() }}
+                @endif
+            </div>
+        </div>
     @endif
 
 @stop

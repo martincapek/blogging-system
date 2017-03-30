@@ -5,8 +5,12 @@
     </td>
     <td>{{ $category->description }}</td>
     <td class="visible-lg visible-md">{{ $category->created_at->format('j. F Y, H:i') }}</td>
-    <td><a href="{{ route('categories.edit', $category->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+    <td>
+        @if(!($category->slug == 'uncategorized'))
+        <a href="{{ route('categories.edit', $category->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;
         &nbsp; <a href="{{ route('categories.destroy', $category->id) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        @endif
+
     </td>
 </tr>
 
