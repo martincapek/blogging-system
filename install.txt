@@ -1,0 +1,32 @@
+Požadavky
+PHP >= 7.0.1
+OpenSSL PHP Extension
+PDO PHP Extension
+Mbstring PHP Extension
+Tokenizer PHP Extension
+XML PHP Extension
+Git
+Composer
+Node.js / npm
+
+1) rozzipuji archiv
+2) přejdu do složky s rozbaleným projektem
+3) provedu příkaz composer install
+4) provedu příkaz npm install
+5) v souboru .env nastavim jmeno, heslo a nazev databaze(jen prazdne), kterou si vytvorim
+6) provedu php artisan migrate --seed
+
+
+
+Hesla:
+Admin:
+admin@blog.cz
+admin123
+
+Moderator:
+moderator@blog.cz
+moderator123
+
+Guest:
+guest@blog.cz
+guest123

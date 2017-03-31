@@ -20,11 +20,16 @@ class CreatePostsTable extends Migration
             $table->text('perex');
             $table->longText('text');
             $table->text('image');
-            $table->integer('category_id');
             $table->integer('views')->default(0);
-            $table->integer('author_id')->references('id')->on('users');
+            $table->integer('category_id')->unsigned();
+            $table->integer('author_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
+
+
+            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('categories');
+
 
         });
     }

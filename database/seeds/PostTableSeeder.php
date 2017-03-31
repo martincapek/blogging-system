@@ -13,6 +13,15 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
+
+        \App\Category::create([
+            'name' => 'Uncategorized'
+        ]);
+
+        \App\Category::create([
+            'name' => 'Random'
+        ]);
+
         $faker = Faker::create();
         foreach (range(1,10) as $index) {
             \App\Post::create([
@@ -41,12 +50,6 @@ class PostTableSeeder extends Seeder
         }
 
 
-        \App\Category::create([
-            'name' => 'Uncategorized'
-        ]);
 
-        \App\Category::create([
-            'name' => 'Random'
-        ]);
     }
 }
