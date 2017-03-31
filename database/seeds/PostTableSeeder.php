@@ -27,9 +27,26 @@ class PostTableSeeder extends Seeder
             ]);
         }
 
+        foreach (range(1,10) as $index) {
+            \App\Post::create([
+                'title' => $faker->text(30),
+                'perex' => $faker->text(200),
+                'text' => $faker->text(2000),
+                'image' => '/media/images/placeholder.jpg',
+                'views' => 0,
+                'author_id' => 1,
+                'category_id' => 2,
+                'created_at' => \Carbon\Carbon::now()
+            ]);
+        }
+
 
         \App\Category::create([
             'name' => 'Uncategorized'
+        ]);
+
+        \App\Category::create([
+            'name' => 'Random'
         ]);
     }
 }
